@@ -1,0 +1,19 @@
+diff --git a/node_modules/expo-screen-capture/build/ScreenCapture.js b/node_modules/expo-screen-capture/build/ScreenCapture.js
+index d9d2b0d..c85239c 100644
+--- a/node_modules/expo-screen-capture/build/ScreenCapture.js
++++ b/node_modules/expo-screen-capture/build/ScreenCapture.js
+@@ -1,9 +1,13 @@
+ import { EventEmitter, UnavailabilityError } from 'expo-modules-core';
++import { NativeEventEmitter } from 'react-native';
+ import { useEffect } from 'react';
+ import ExpoScreenCapture from './ExpoScreenCapture';
+ const activeTags = new Set();
+-const emitter = new EventEmitter(ExpoScreenCapture);
++const emitter = Platform.OS === 'ios' || Platform.OS === 'web' ? new EventEmitter(ExpoScreenCapture) : new NativeEventEmitter();
+ const onScreenshotEventName = 'onScreenshot';
++
++console.log("--------- patch applied ----------")
++
+ // @needsAudit
+ /**
+  * Returns whether the Screen Capture API is available on the current device.
